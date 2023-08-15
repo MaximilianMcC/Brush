@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Brush
 {
@@ -42,7 +31,20 @@ namespace Brush
         // Import media like an image or something idk
         private void ImportMedia()
         {
-            outputLabel.Content = "Import media";
+            // Create the file dialogue to get the media
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg|JPG Files (*.jpg)|*.jpg",
+                Title = "Select media to import"
+            };
+
+            // Get the selected thing from the dialog
+            if (fileDialog.ShowDialog() == true)
+            {
+                string filePath = fileDialog.FileName;
+                string fileName = filePath.Substring(filePath.LastIndexOf("\\") + 1);
+                outputLabel.Content = "Imported " + fileName;
+            }
         }
 
     }
