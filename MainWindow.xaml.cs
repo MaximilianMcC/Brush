@@ -24,5 +24,28 @@ namespace Brush
         {
             InitializeComponent();
         }
+
+        // Check for shortcuts
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.I) ImportMedia();
+        }
+
+        private void ImportMedia_Click(object sender, RoutedEventArgs e)
+        {
+            ImportMedia();
+        }
+
+
+
+
+        // Import media like an image or something idk
+        private void ImportMedia()
+        {
+            outputLabel.Content = "Import media";
+        }
+
     }
+
+    
 }

@@ -5,9 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Brush"
         mc:Ignorable="d"
-        Title="Brush" Height="450" Width="800">
+        Title="Brush" Height="450" Width="800"
+        
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Grid>
-        <Label x:Name="label" Content="Brush hello world" HorizontalAlignment="Left" Margin="319,196,0,0" VerticalAlignment="Top"/>
+
+        <!-- Context menu -->
+        <Menu VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New project" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Open project" InputGestureText="Ctrl+O"/>
+                <Separator/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S"/>
+                <MenuItem Header="Save As" InputGestureText="Ctrl+Shift+S"/>
+                <Separator/>
+                <MenuItem Header="Import media" InputGestureText="Ctrl+I" Click="ImportMedia_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="Redo" InputGestureText="Ctrl+Y"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Output thingy -->
+        <Grid VerticalAlignment="Bottom" Background="#FFF0F0F0">
+            <Label x:Name="outputLabel" Content="Hello, world!"/>
+        </Grid>
 
     </Grid>
 </Window>
