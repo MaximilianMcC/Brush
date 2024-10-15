@@ -27,7 +27,7 @@ class Brush : Tool
 		// TODO: Do this in update
 		if (Raylib.IsMouseButtonDown(MouseButton.Left))
 		{
-			Raylib.DrawCircleV(Raylib.GetMousePosition(), Size, Color);
+			Raylib.DrawCircleV(Canvas.MousePosition(), Size, Color);
 		}
 	}
 
