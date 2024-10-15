@@ -5,6 +5,10 @@ class Canvas
 {
 	public static RenderTexture2D RenderTexture;
 	private static Camera2D camera;
+	
+	public static float Zoom {
+		get { return camera.Zoom; }
+	}
 
 	public static void Setup(int width, int height)
 	{

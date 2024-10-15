@@ -3,7 +3,7 @@ using Raylib_cs;
 class Brush : Tool
 {
 	public override string Name => "Brush";
-	public override string Tutorial => "`[` Decrease Brush\t`]` Increase Brush";
+	public override string Tutorial => "`[` Decrease Brush \t `]` Increase Brush";
 	public override KeyboardKey ShortcutKey => KeyboardKey.B;
 
 	// Brush settings
@@ -26,7 +26,7 @@ class Brush : Tool
 		// TODO: Do this in update
 		if (Raylib.IsMouseButtonDown(MouseButton.Left))
 		{
-			Raylib.DrawCircleV(Canvas.MousePosition(), Size, Color);
+			Raylib.DrawCircleV(Canvas.MousePosition(), Size / Canvas.Zoom, Color);
 		}
 	}
 
