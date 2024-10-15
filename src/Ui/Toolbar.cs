@@ -1,5 +1,4 @@
 using System.Numerics;
-using System.Text.RegularExpressions;
 using Raylib_cs;
 
 partial class Toolbar
@@ -35,7 +34,11 @@ partial class Toolbar
 
 		// Manually check for if they press on the color picker
 		// TODO: Don't do manually
-		if (Raylib.IsKeyPressed(ColorPicker.ShortcutKey)) ColorPicker.Select();
+		if (Raylib.IsKeyPressed(ColorPicker.ShortcutKey)) ColorPicker.Open();
+		if (Raylib.IsMouseButtonDown(MouseButton.Left))
+		{
+			if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), new Rectangle(padding, Raylib.GetScreenHeight() - (toolbarWidth - padding2), toolbarWidth - padding2, toolbarWidth - padding2))) ColorPicker.Open();
+		}
 
 		// Check for if we selected a new tool. If we did
 		// then run the select/deselect methods for the
@@ -65,6 +68,10 @@ partial class Toolbar
 			// Draw the tools icon on the icon thing
 			Raylib.DrawTexturePro(iconTextures[i], AssetManager.GetTextureSize(iconTextures[i]), tools[i], Vector2.Zero, 0f, Color.White);
 		}
+
+		// manually draw the color picker
+		// TODO: Don't do manually
+		Raylib.DrawRectangleRec(new Rectangle(padding, Raylib.GetScreenHeight() - (toolbarWidth - padding2), toolbarWidth - padding2, toolbarWidth - padding2), Canvas.Color);
 
 		// Draw a tutorial bar thingy at the bottom
 		// that has shortcuts and whatnot

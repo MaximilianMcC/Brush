@@ -5,7 +5,7 @@ class ColorPicker
 {
 	public static KeyboardKey ShortcutKey = KeyboardKey.K;
 
-	public static void Select()
+	public static void Open()
 	{
 		// Open the color dialogue thingy
 		// TODO: Don't use var
