@@ -32,12 +32,12 @@ class Program
 		{
 			// Tool related stuff
 			Toolbar.Update();
-			Toolbar.Tool.Update();
+			Toolbar.CurrentTool.Update();
 
 			// Canvas drawing stuff
 			// TODO: Do this in the canvas class
 			Raylib.BeginTextureMode(Canvas.RenderTexture);
-			Toolbar.Tool.CanvasRender();
+			Toolbar.CurrentTool.CanvasRender();
 			Raylib.EndTextureMode();
 
 			Raylib.BeginDrawing();
@@ -48,7 +48,7 @@ class Program
 
 			// Tool related stuff UI stuff
 			Toolbar.Render();
-			Toolbar.Tool.UiRender();
+			Toolbar.CurrentTool.UiRender();
 
 
 			Raylib.EndDrawing();

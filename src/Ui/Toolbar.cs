@@ -13,7 +13,7 @@ partial class Toolbar
 	private static List<Texture2D> iconTextures = new List<Texture2D>();
 	public static int SelectedToolIndex = 0;
 
-	public static Tool Tool {
+	public static Tool CurrentTool {
 		get { return Tools[SelectedToolIndex]; }
 	}
 
@@ -69,36 +69,9 @@ partial class Toolbar
 		Raylib.DrawRectangleRec(new Rectangle(toolbarWidth, textY, Raylib.GetScreenWidth(), tutorialBarHeight), Theme.BackgroundPrimary);
 		textY += padding;
 
-		// Check for if we've got any tutorial text
-		// TODO: Don't nest
-		if (Tool.Tutorial != "")
-		{
-			// Draw the text and turn stuff in `` into buttons
-			string[] textSegments = Regex.Split(Tool.Tutorial, @"(`[^`]*`)");
-			bool currentlyDrawingKey = false;
-			float textX = toolbarWidth + padding;
-			foreach (string segment in textSegments)
-			{
-				// Check for if we've started or stopped
-				// drawing a keyboard key thingy
-				if (segment.StartsWith('`')) currentlyDrawingKey = true;
-				if (segment.EndsWith('`')) currentlyDrawingKey = false;
-
-				// Measure the bit of text
-				Vector2 textSize = Helper.MeasureText(segment);
-
-				// Check for if we need to draw a key thingy
-				// behind the text. If we do then draw it
-				if (currentlyDrawingKey)
-				{
-					Raylib.DrawRectangleRec(new Rectangle(textX, textY, textSize), Theme.Content);
-				}
-
-				// Draw the text and update the current X position
-				Helper.DrawText(segment.Replace('`', '\0'), new Vector2(textX, Raylib.GetScreenHeight() - (tutorialBarHeight - padding)));
-				textX += textSize.X;
-			}
-		}
+		// Draw the tutorial text
+		// TODO: Render keys for shortcuts
+		Helper.DrawText(CurrentTool.Tutorial, new Vector2(toolbarWidth + padding, textY));
 	}
 
 	public static void CleanUp()
