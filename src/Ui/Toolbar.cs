@@ -8,6 +8,7 @@ class Toolbar
 	private const float padding2 = padding * 2;
 
 	public static List<Tool> Tools = new List<Tool>();
+	private static List<Texture2D> iconTextures = new List<Texture2D>();
 	public static int SelectedToolIndex = 0;
 
 	public static void Update()
@@ -39,7 +40,15 @@ class Toolbar
 			// tool is selected or not then draw it
 			Color color = (i == SelectedToolIndex) ? ColorTheme.Content : ColorTheme.BackgroundSecondary;
 			Raylib.DrawRectangleRec(tools[i], color);
+
+			// Draw the tools icon on the icon thing
+			Raylib.DrawTexturePro(iconTextures[i], AssetManager.GetTextureSize(iconTextures[i]), tools[i], Vector2.Zero, 0f, Color.White);
 		}
+	}
+
+	public static void CleanUp()
+	{
+		foreach (Texture2D icon in iconTextures) Raylib.UnloadTexture(icon);
 	}
 
 	private static List<Rectangle> GetToolRectangles()
@@ -62,5 +71,11 @@ class Toolbar
 
 		// Ka Pai
 		return tools;
+	}
+
+	public static void RegisterTool(Tool tool)
+	{
+		Tools.Add(tool);
+		iconTextures.Add(AssetManager.LoadTexture(@$"./assets/icons/{tool.Name.ToLower().Replace(' ', '-')}.png"));
 	}
 }
