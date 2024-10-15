@@ -1,6 +1,6 @@
 using Raylib_cs;
 
-class ColorTheme
+class Theme
 {
 	// Dark theme
 	private static readonly Color DarkForeground = new Color(255, 255, 255, 255);
@@ -20,8 +20,14 @@ class ColorTheme
 	public static Color BackgroundSecondary;
 	public static Color Content;
 
-	public static void SetColorTheme(string colorThemeName)
+	// Fonts
+	public static Font Font = AssetManager.LoadFont("./assets/fonts/bahnschrift.ttf");
+	public static float FontSize = 16f;
+	public static float FontSpacing = FontSize / 10f;
+
+	public static void SetTheme(string colorThemeName)
 	{
+		// Set the color theme
 		if (colorThemeName == "dark")
 		{
 			Foreground = DarkForeground;
@@ -36,5 +42,10 @@ class ColorTheme
 			BackgroundSecondary = LightBackgroundSecondary;
 			Content = LightContent;
 		}
+	}
+
+	public static void CleanUp()
+	{
+		Raylib.UnloadFont(Font);
 	}
 }

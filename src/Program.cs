@@ -12,8 +12,8 @@ class Program
 		Raylib.MaximizeWindow();
 		Raylib.SetExitKey(KeyboardKey.Null);
 
-		// Set the UI color theme
-		ColorTheme.SetColorTheme("dark");
+		// Set the UI theme
+		Theme.SetTheme("dark");
 
 		// Add/register all the tools
 		Toolbar.RegisterTool(new Cursor());
@@ -56,6 +56,7 @@ class Program
 
 		Toolbar.CleanUp();
 		Canvas.CleanUp();
+		Theme.CleanUp();
 		Raylib.CloseWindow();
 	}
 }
