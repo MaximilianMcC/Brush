@@ -11,6 +11,10 @@ class Toolbar
 	private static List<Texture2D> iconTextures = new List<Texture2D>();
 	public static int SelectedToolIndex = 0;
 
+	public static Tool Tool {
+		get { return Tools[SelectedToolIndex]; }
+	}
+
 	public static void Update()
 	{
 		// Check for if they wanna change tool

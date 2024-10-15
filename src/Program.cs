@@ -23,23 +23,39 @@ class Program
 		// tool because theres nothing to call it
 		Toolbar.Tools[Toolbar.SelectedToolIndex].OnSelect();
 
+		// Create the actual canvas so we can
+		// draw on it and whatnot
+		// TODO: Don't do this like this
+		Canvas.Setup(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
+
 		while (!Raylib.WindowShouldClose())
 		{
 			// Tool related stuff
 			Toolbar.Update();
-			Toolbar.Tools[Toolbar.SelectedToolIndex].Update();
+			Toolbar.Tool.Update();
+
+			// Canvas drawing stuff
+			// TODO: Do this in the canvas class
+			Raylib.BeginTextureMode(Canvas.RenderTexture);
+			Toolbar.Tool.CanvasRender();
+			Raylib.EndTextureMode();
 
 			Raylib.BeginDrawing();
 			Raylib.ClearBackground(Color.Magenta);
 
-			// Tool related stuff
+			// Draw the actual canvas
+			Canvas.Render();
+
+			// Tool related stuff UI stuff
 			Toolbar.Render();
-			Toolbar.Tools[Toolbar.SelectedToolIndex].Render();
+			Toolbar.Tool.UiRender();
+
 
 			Raylib.EndDrawing();
 		}
 
 		Toolbar.CleanUp();
+		Canvas.CleanUp();
 		Raylib.CloseWindow();
 	}
 }
