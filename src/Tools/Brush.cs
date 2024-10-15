@@ -49,11 +49,11 @@ class Brush : Tool
 			for (int i = 0; i < distance; i++)
 			{
 				// Draw the brush thingy lerped
-				// TODO: Use an image instead of a circle (different brushes)
 				Vector2 position = Vector2.Lerp(previousBrushPosition, brushPosition, i / distance);
-				Raylib.DrawCircleV(position, Size / Canvas.Zoom, Color);
+				Draw(position);
 			}
 		}
+		else Draw(brushPosition);
 
 		// Say that we just had the brush down and
 		// also update the position now
@@ -66,6 +66,12 @@ class Brush : Tool
 		// Draw a circle around showing where the brush is gonna draw
 		// TODO: Make it invert stuff behind with a shader or whatever
 		Raylib.DrawCircleLinesV(Raylib.GetMousePosition(), Size, Color.Black);
+	}
+
+	private static void Draw(Vector2 position)
+	{
+		// TODO: Use an image instead of a circle (different brushes)
+		Raylib.DrawCircleV(position, Size / Canvas.Zoom, Color);
 	}
 
 	public override void OnSelect() => Raylib.HideCursor();
