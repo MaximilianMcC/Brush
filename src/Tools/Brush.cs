@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 
 class Brush : Tool
@@ -9,6 +10,9 @@ class Brush : Tool
 	// Brush settings
 	public static float Size = 25;
 	public static Color Color = Color.Green;
+
+	private static Vector2 previousBrushPosition;
+	private static bool brushPreviouslyDown = false;
 
 	public override void Update()
 	{
@@ -23,11 +27,38 @@ class Brush : Tool
 
 	public override void CanvasRender()
 	{
-		// TODO: Do this in update
-		if (Raylib.IsMouseButtonDown(MouseButton.Left))
+		// Check for if the brush is "on" the canvas
+		if (Raylib.IsMouseButtonDown(MouseButton.Left) == false)
 		{
-			Raylib.DrawCircleV(Canvas.MousePosition(), Size / Canvas.Zoom, Color);
+			brushPreviouslyDown = false;
+			return;
 		}
+		
+		// Get the brush position
+		Vector2 brushPosition = Canvas.MousePosition();
+		if (brushPreviouslyDown == false) previousBrushPosition = brushPosition;
+
+		// Get the distance that the brush has traveled
+		// so we can interpolate between it so the drawing
+		// is super smooth and whatnot and no fat circles
+		//! Might not need the > 0 check idk
+		float distance = Vector2.Distance(previousBrushPosition, brushPosition);
+		if (distance > 0)
+		{
+			// TODO: Only have this part in the render thing
+			for (int i = 0; i < distance; i++)
+			{
+				// Draw the brush thingy lerped
+				// TODO: Use an image instead of a circle (different brushes)
+				Vector2 position = Vector2.Lerp(previousBrushPosition, brushPosition, i / distance);
+				Raylib.DrawCircleV(position, Size / Canvas.Zoom, Color);
+			}
+		}
+
+		// Say that we just had the brush down and
+		// also update the position now
+		brushPreviouslyDown = true;
+		previousBrushPosition = brushPosition;
 	}
 
 	public override void UiRender()
