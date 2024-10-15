@@ -33,6 +33,10 @@ partial class Toolbar
 			}
 		}
 
+		// Manually check for if they press on the color picker
+		// TODO: Don't do manually
+		if (Raylib.IsKeyPressed(ColorPicker.ShortcutKey)) ColorPicker.Select();
+
 		// Check for if we selected a new tool. If we did
 		// then run the select/deselect methods for the
 		// tools and whatnot

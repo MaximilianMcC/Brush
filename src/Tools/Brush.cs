@@ -9,7 +9,6 @@ class Brush : Tool
 
 	// Brush settings
 	public static float Size = 25;
-	public static Color Color = Color.Green;
 
 	private static Vector2 previousBrushPosition;
 	private static bool brushPreviouslyDown = false;
@@ -71,7 +70,7 @@ class Brush : Tool
 	private static void Draw(Vector2 position)
 	{
 		// TODO: Use an image instead of a circle (different brushes)
-		Raylib.DrawCircleV(position, Size / Canvas.Zoom, Color);
+		Raylib.DrawCircleV(position, Size / Canvas.Zoom, Canvas.Color);
 	}
 
 	public override void OnSelect() => Raylib.HideCursor();
