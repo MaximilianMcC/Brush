@@ -5,6 +5,8 @@ abstract class Tool
 	public abstract string Name { get; }
 	public abstract KeyboardKey ShortcutKey { get; }
 
-	public abstract void Update();
-	public abstract void Render();
+	public virtual void OnSelect() { }
+	public virtual void Update() { }
+	public virtual void Render() { }
+	public virtual void OnDeselect() { }
 }

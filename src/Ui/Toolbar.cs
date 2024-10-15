@@ -14,6 +14,7 @@ class Toolbar
 	public static void Update()
 	{
 		// Check for if they wanna change tool
+		int previousSelectedToolIndex = SelectedToolIndex;
 		for (int i = 0; i < Tools.Count; i++)
 		{
 			// Check for if they press the shortcut
@@ -24,6 +25,16 @@ class Toolbar
 			{
 				if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), GetToolRectangles()[i])) SelectedToolIndex = i;
 			}
+		}
+
+		// Check for if we selected a new tool. If we did
+		// then run the select/deselect methods for the
+		// tools and whatnot
+		if (SelectedToolIndex != previousSelectedToolIndex)
+		{
+			// Deselect the previous tool, and select the current one
+			Tools[previousSelectedToolIndex].OnDeselect();
+			Tools[SelectedToolIndex].OnSelect();
 		}
 	}
 

@@ -19,6 +19,10 @@ class Program
 		Toolbar.RegisterTool(new Cursor());
 		Toolbar.RegisterTool(new Brush());
 
+		// Run the select thingy for the fist
+		// tool because theres nothing to call it
+		Toolbar.Tools[Toolbar.SelectedToolIndex].OnSelect();
+
 		while (!Raylib.WindowShouldClose())
 		{
 			// Tool related stuff
