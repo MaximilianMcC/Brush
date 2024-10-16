@@ -32,6 +32,7 @@ class Program
 		while (!Raylib.WindowShouldClose())
 		{
 			// Tool related stuff
+			FileManager.Update();
 			Toolbar.Update();
 			Toolbar.CurrentTool.Update();
 

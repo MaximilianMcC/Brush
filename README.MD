@@ -11,3 +11,4 @@ Heaps of these are stolen from Photoshop because thats what I'm most comfortable
 | decrease brush size | `[` |
 | Open color picker | `K` |
 | Select Eye Dropper | `I` |
+| Save image | `ctrl + s` |
