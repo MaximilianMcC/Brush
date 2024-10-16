@@ -27,9 +27,4 @@ class ColorPicker
 			Canvas.Color = color;
 		}
 	}
-
-	public static Rectangle GetRectangle(Vector2 position, Vector2 size)
-	{
-		return new Rectangle(position, size);
-	}
 }
