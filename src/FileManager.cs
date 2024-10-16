@@ -31,5 +31,38 @@ class FileManager
 				Raylib.UnloadImage(image);
 			}
 		}
+	
+		// Check for if they do ctrl+o to open a file
+		if (Raylib.IsKeyDown(KeyboardKey.LeftControl) && Raylib.IsKeyPressed(KeyboardKey.O))
+		{
+			// Get the default pictures path
+			string picturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+			// Open the save file dialogue thingy
+			// to ask them where they wanna save it
+			FileFilter filter = new FileFilter("Image files", ["*.jpg", "*.jpeg", "*.png"]);
+			var (canceled, path) = TinyDialogs.OpenFileDialog("Saving the picture rn (whereabouts)", picturesPath, false, filter);
+			
+
+			// Open the image
+			if (canceled == false)
+			{
+				// Load in the image
+				Texture2D image = Raylib.LoadTexture(path.First());
+
+				// Load a new canvas thingy from the texture
+				Canvas.Setup(image.Width, image.Height);
+				
+				// Paste the image on top of the canvas
+				// to make it look like we opened it
+				Raylib.BeginTextureMode(Canvas.RenderTexture);
+				Raylib.DrawTexture(image, 0, 0, Color.White);
+				Raylib.EndTextureMode();
+
+				// Unload the image since we're done using it
+				// and its been baked into the canvas
+				Raylib.UnloadTexture(image);
+			}
+		}
 	}
 }
