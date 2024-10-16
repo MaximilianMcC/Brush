@@ -10,7 +10,7 @@ class Canvas
 		get { return camera.Zoom; }
 	}
 
-	public static Color Color;
+	public static Color Color = Color.Magenta;
 
 	public static void Setup(int width, int height)
 	{

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Raylib_cs;
 using TinyDialogsNet;
 
@@ -25,5 +26,10 @@ class ColorPicker
 			Color color = new Color(red, green, blue, byte.MaxValue);
 			Canvas.Color = color;
 		}
+	}
+
+	public static Rectangle GetRectangle(Vector2 position, Vector2 size)
+	{
+		return new Rectangle(position, size);
 	}
 }

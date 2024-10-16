@@ -16,29 +16,49 @@ partial class Toolbar
 		get { return Tools[SelectedToolIndex]; }
 	}
 
+	// Manually make the rectangle for the color picker
+	// TODO: Put in some sorta class or something or at the very least a method
+	private static Rectangle colorPickerRectangle;
+
 	public static void Update()
 	{
+		// Calculate the color picker icon position
+		float iconSize = toolbarWidth - padding2;
+		colorPickerRectangle = new Rectangle(padding, Raylib.GetScreenHeight() - tutorialBarHeight - iconSize, new Vector2(iconSize));
+
+		// Get all the rectangles for collision detection
+		List<Rectangle> rectangles = GetToolRectangles();
+		rectangles.Add(colorPickerRectangle);
+
 		// Check for if they wanna change tool
 		int previousSelectedToolIndex = SelectedToolIndex;
-		for (int i = 0; i < Tools.Count; i++)
+		for (int i = 0; i < rectangles.Count; i++)
 		{
-			// Check for if they press the shortcut
-			if (Raylib.IsKeyPressed(Tools[i].ShortcutKey)) SelectedToolIndex = i;
-
 			// Check for if they click the button on the toolbar
 			if (Raylib.IsMouseButtonDown(MouseButton.Left))
 			{
-				if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), GetToolRectangles()[i])) SelectedToolIndex = i;
+				if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), rectangles[i]))
+				{
+					// Set the index or launch the specialist
+					if (i >= Tools.Count)
+					{
+						if (i == (Tools.Count + 0)) ColorPicker.Open();
+					}
+					else SelectedToolIndex = i;
+				}
 			}
+
+			// If the current rectangle isn't a tool then
+			// don't look for its shortcut because it hasn't got one
+			if (i >= Tools.Count) continue;
+
+			// Check for if they press the shortcut
+			if (Raylib.IsKeyPressed(Tools[i].ShortcutKey)) SelectedToolIndex = i;
 		}
 
-		// Manually check for if they press on the color picker
+		// Manually check for if they do the color picker shortcut
 		// TODO: Don't do manually
 		if (Raylib.IsKeyPressed(ColorPicker.ShortcutKey)) ColorPicker.Open();
-		if (Raylib.IsMouseButtonDown(MouseButton.Left))
-		{
-			if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), new Rectangle(padding, Raylib.GetScreenHeight() - (toolbarWidth - padding2), toolbarWidth - padding2, toolbarWidth - padding2))) ColorPicker.Open();
-		}
 
 		// Check for if we selected a new tool. If we did
 		// then run the select/deselect methods for the
@@ -69,9 +89,22 @@ partial class Toolbar
 			Raylib.DrawTexturePro(iconTextures[i], AssetManager.GetTextureSize(iconTextures[i]), tools[i], Vector2.Zero, 0f, Color.White);
 		}
 
+		// Calculate the smaller inner rectangle thingy
+		// thingy that shows the actual color
+		float scale = 0.8f;
+		float margin = (1 - scale) / 2 * colorPickerRectangle.Width;
+
+		Rectangle innerRectangle = new Rectangle(
+			colorPickerRectangle.X + margin, 
+			colorPickerRectangle.Y + margin, 
+			colorPickerRectangle.Width * scale, 
+			colorPickerRectangle.Height * scale
+		);
+
 		// manually draw the color picker
 		// TODO: Don't do manually
-		Raylib.DrawRectangleRec(new Rectangle(padding, Raylib.GetScreenHeight() - (toolbarWidth - padding2), toolbarWidth - padding2, toolbarWidth - padding2), Canvas.Color);
+		Raylib.DrawRectangleRec(colorPickerRectangle, Theme.Content);
+		Raylib.DrawRectangleRec(innerRectangle, Canvas.Color);
 
 		// Draw a tutorial bar thingy at the bottom
 		// that has shortcuts and whatnot
