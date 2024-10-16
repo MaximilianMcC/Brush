@@ -9,7 +9,6 @@ partial class Toolbar
 	private const float padding2 = padding * 2;
 
 	public static List<Tool> Tools = new List<Tool>();
-	private static List<Texture2D> iconTextures = new List<Texture2D>();
 	public static int SelectedToolIndex = 0;
 
 	public static Tool CurrentTool {
@@ -86,14 +85,13 @@ partial class Toolbar
 			Raylib.DrawRectangleRec(tools[i], color);
 
 			// Draw the tools icon on the icon thing
-			Raylib.DrawTexturePro(iconTextures[i], AssetManager.GetTextureSize(iconTextures[i]), tools[i], Vector2.Zero, 0f, Color.White);
+			Raylib.DrawTexturePro(Tools[i].Icon, AssetManager.GetTextureSize(Tools[i].Icon), tools[i], Vector2.Zero, 0f, Color.White);
 		}
 
 		// Calculate the smaller inner rectangle thingy
 		// thingy that shows the actual color
 		float scale = 0.8f;
 		float margin = (1 - scale) / 2 * colorPickerRectangle.Width;
-
 		Rectangle innerRectangle = new Rectangle(
 			colorPickerRectangle.X + margin, 
 			colorPickerRectangle.Y + margin, 
@@ -120,7 +118,8 @@ partial class Toolbar
 
 	public static void CleanUp()
 	{
-		foreach (Texture2D icon in iconTextures) Raylib.UnloadTexture(icon);
+		// Unload all the tools
+		foreach (Tool tool in Tools) tool.CleanUp();
 	}
 
 	private static List<Rectangle> GetToolRectangles()
@@ -143,11 +142,5 @@ partial class Toolbar
 
 		// Ka Pai
 		return tools;
-	}
-
-	public static void RegisterTool(Tool tool)
-	{
-		Tools.Add(tool);
-		iconTextures.Add(AssetManager.LoadTexture(@$"./assets/icons/{tool.Name.ToLower().Replace(' ', '-')}.png"));
 	}
 }
