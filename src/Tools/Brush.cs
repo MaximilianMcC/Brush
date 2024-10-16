@@ -64,7 +64,7 @@ class Brush : Tool
 	{
 		// Draw a circle around showing where the brush is gonna draw
 		// TODO: Make it invert stuff behind with a shader or whatever
-		Raylib.DrawCircleLinesV(Raylib.GetMousePosition(), Size, Color.Black);
+		Raylib.DrawCircleLinesV(Raylib.GetMousePosition(), Size, Color.DarkGray);
 	}
 
 	private static void Draw(Vector2 position)
