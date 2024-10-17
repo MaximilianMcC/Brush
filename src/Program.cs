@@ -35,6 +35,7 @@ class Program
 			FileManager.Update();
 			Toolbar.Update();
 			Toolbar.CurrentTool.Update();
+			Canvas.Update();
 
 			// Canvas drawing stuff
 			// TODO: Do this in the canvas class
