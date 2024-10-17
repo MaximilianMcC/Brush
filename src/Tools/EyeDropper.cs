@@ -24,14 +24,12 @@ class EyeDropper : Tool
 
 		// If the mouse isn't on the canvas
 		// then don't do anything
-		if (Raylib.CheckCollisionPointRec(mousePosition, AssetManager.GetTextureSize(Canvas.RenderTexture.Texture)) == false) return;
+		if (Raylib.CheckCollisionPointRec(mousePosition, AssetManager.GetTextureSize(Canvas.CurrentLayer.Texture)) == false) return;
 
 		// Turn the canvas into an image then
 		// extract the color at the position. Unload
 		// the image afterwards since we don't need it
-		Image canvasImage = Raylib.LoadImageFromTexture(Canvas.RenderTexture.Texture);
-		Color color = Raylib.GetImageColor(canvasImage, x, y);
-		Raylib.UnloadImage(canvasImage);
+		Color color = Raylib.GetImageColor(Canvas.GetFlattenedImage(), x, y);
 
 		// Set the color as the active color
 		Canvas.Color = color;

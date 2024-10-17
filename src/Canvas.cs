@@ -3,7 +3,15 @@ using Raylib_cs;
 
 class Canvas
 {
-	public static RenderTexture2D RenderTexture;
+	public static int Width;
+	public static int Height;
+	public static List<RenderTexture2D> Layers;
+	private static Image tempFlattenedImage;
+
+	public static int SelectedLayerIndex = 0;
+	public static RenderTexture2D CurrentLayer {
+		get { return Layers[SelectedLayerIndex]; }
+	}
 
 	private static Camera2D camera;
 	public static float Zoom {
@@ -13,9 +21,9 @@ class Canvas
 	public static Color Color = Color.Magenta;
 
 	public static void Setup(int width, int height)
-	{
-		// Make the render texture so we can draw on it
-		RenderTexture = Raylib.LoadRenderTexture(width, height);
+	{	
+		Width = width;
+		Height = height;
 
 		// Make a 2D camera so we can move around the canvas easy
 		camera = new Camera2D()
@@ -26,11 +34,9 @@ class Canvas
 			Zoom = 0.9f
 		};
 
-		// Put a quick background color on the thing
-		// TODO: Make it transparent by default
-		Raylib.BeginTextureMode(RenderTexture);
-		Raylib.ClearBackground(Color.White);
-		Raylib.EndTextureMode();
+		// Make a first default layer thing 
+		Layers = new List<RenderTexture2D>();
+		AddLayer(Color.White);
 	}
 
 	public static void Update()
@@ -55,17 +61,80 @@ class Canvas
 	{
 		// Draw the canvas
 		Raylib.BeginMode2D(camera);
-		Raylib.DrawTexturePro(RenderTexture.Texture, new Rectangle(0, 0, RenderTexture.Texture.Width, -RenderTexture.Texture.Height), new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+
+		// TODO: Draw a transparent background thingy also
+
+		// Draw all the layers
+		DrawAllLayers();
+
 		Raylib.EndMode2D();
 	}
 
 	public static void CleanUp()
 	{
-		Raylib.UnloadRenderTexture(RenderTexture);
+		// Unload all of the layers
+		foreach (RenderTexture2D layer in Layers) Raylib.UnloadRenderTexture(layer);
+
+		// Unload the temporary flattened image
+		Raylib.UnloadImage(tempFlattenedImage);
 	}
 
 	public static Vector2 MousePosition()
 	{
+		// TODO: Make this a property
 		return Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), camera);
+	}
+
+	public static void AddLayer(Color? color = null)
+	{
+		// Make the actual layer
+		RenderTexture2D currentLayer = Raylib.LoadRenderTexture(Width, Height);
+
+		// If a color was supplied then fill it
+		// as the background thingy
+		if (color != null)
+		{
+			Raylib.BeginTextureMode(currentLayer);
+			Raylib.DrawRectangle(0, 0, Width, Height, (Color)color);
+			Raylib.EndTextureMode();
+		}
+
+		// Add it to the list of layers and also
+		// set it to be the selected layer rn
+		Layers.Add(currentLayer);
+		SelectedLayerIndex = Layers.Count - 1;
+	}
+
+	public static Image GetFlattenedImage()
+	{
+		// Make a new render texture so that we can draw
+		// all the layers onto it before making it an image
+		RenderTexture2D renderTexture = Raylib.LoadRenderTexture(Width, Height);
+
+		// Loop over every layer and draw it onto the image
+		Raylib.BeginTextureMode(renderTexture);
+		DrawAllLayers();
+		Raylib.EndTextureMode();
+
+		// Put the render texture onto the image then
+		// flip it because openGl draws upside down
+		tempFlattenedImage = Raylib.LoadImageFromTexture(renderTexture.Texture);
+		Raylib.ImageFlipVertical(ref tempFlattenedImage);
+
+		// Get rid of the render texture then give them
+		// back the temp image. The image is unloaded in
+		// cleanup() at the very end
+		Raylib.UnloadRenderTexture(renderTexture);
+		return tempFlattenedImage;
+	}
+
+	private static void DrawAllLayers()
+	{
+		// Loop over every layer and draw it
+		// TODO: Might need to use reverse for loop
+		foreach (RenderTexture2D layer in Layers)
+		{
+			Raylib.DrawTexturePro(layer.Texture, new Rectangle(0, 0, Width, -Height), new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+		}
 	}
 }

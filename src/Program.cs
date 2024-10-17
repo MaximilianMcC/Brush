@@ -34,12 +34,13 @@ class Program
 			// Tool related stuff
 			FileManager.Update();
 			Toolbar.Update();
+			Layers.Update();
 			Toolbar.CurrentTool.Update();
 			Canvas.Update();
 
 			// Canvas drawing stuff
 			// TODO: Do this in the canvas class
-			Raylib.BeginTextureMode(Canvas.RenderTexture);
+			Raylib.BeginTextureMode(Canvas.CurrentLayer);
 			Toolbar.CurrentTool.CanvasRender();
 			Raylib.EndTextureMode();
 
@@ -51,6 +52,7 @@ class Program
 
 			// Tool related stuff UI stuff
 			Toolbar.Render();
+			Layers.Render();
 			Toolbar.CurrentTool.UiRender();
 
 

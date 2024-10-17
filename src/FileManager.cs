@@ -20,15 +20,8 @@ class FileManager
 			// Save the image
 			if (canceled == false)
 			{
-				// Get the canvas as an image and
-				// rotate it because render textures
-				// are drawn upside down
-				Image image = Raylib.LoadImageFromTexture(Canvas.RenderTexture.Texture);
-				Raylib.ImageFlipVertical(ref image);
-
-				// Save then unload the image
-				Raylib.ExportImage(image, path);
-				Raylib.UnloadImage(image);
+				// Save the image
+				Raylib.ExportImage(Canvas.GetFlattenedImage(), path);
 			}
 		}
 	
@@ -55,7 +48,7 @@ class FileManager
 				
 				// Paste the image on top of the canvas
 				// to make it look like we opened it
-				Raylib.BeginTextureMode(Canvas.RenderTexture);
+				Raylib.BeginTextureMode(Canvas.CurrentLayer);
 				Raylib.DrawTexture(image, 0, 0, Color.White);
 				Raylib.EndTextureMode();
 
