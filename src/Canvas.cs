@@ -6,6 +6,8 @@ class Canvas
 	public static int Width;
 	public static int Height;
 	public static List<RenderTexture2D> Layers;
+
+	public static Texture2D TransparentBackground;
 	private static Image tempFlattenedImage;
 
 	public static int SelectedLayerIndex = 0;
@@ -22,6 +24,7 @@ class Canvas
 
 	public static void Setup(int width, int height)
 	{	
+		// Set the size of the canvas
 		Width = width;
 		Height = height;
 
@@ -34,9 +37,14 @@ class Canvas
 			Zoom = 0.9f
 		};
 
+		// Generate a texture thing that has the
+		// transparent checked squares
+		tempFlattenedImage = Raylib.GenImageChecked(Width, Height, 32, 32, Color.White, Color.LightGray);
+		TransparentBackground = Raylib.LoadTextureFromImage(tempFlattenedImage);
+
 		// Make a first default layer thing 
 		Layers = new List<RenderTexture2D>();
-		AddLayer(Color.White);
+		AddLayer();
 	}
 
 	public static void Update()
@@ -62,7 +70,8 @@ class Canvas
 		// Draw the canvas
 		Raylib.BeginMode2D(camera);
 
-		// TODO: Draw a transparent background thingy also
+		// Draw a transparent background thingy in the very back
+		Raylib.DrawTexturePro(TransparentBackground, new Rectangle(0, 0, Width, -Height), new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
 
 		// Draw all the layers
 		DrawAllLayers();
