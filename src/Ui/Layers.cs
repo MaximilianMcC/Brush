@@ -14,14 +14,13 @@ class Layers
 
 		// Check for if they click on a layer
 		List<Rectangle> layerPreviews = GetRectangles();
-		for (int i = 0; i < layerPreviews.Count; i++)
+		for (int i = Canvas.Layers.Count - 1; i >= 0; i--)
 		{
 			// Check if they're clicking on the layer
 			if (Raylib.IsMouseButtonPressed(MouseButton.Left))
 			{
 				if (Raylib.CheckCollisionPointRec(Raylib.GetMousePosition(), layerPreviews[i])) Canvas.SelectedLayerIndex = i;
 			}
-
 		}
 	}
 
@@ -32,7 +31,7 @@ class Layers
 
 		// Draw layer previews on the side
 		List<Rectangle> layerPreviews = GetRectangles();
-		for (int i = 0; i < Canvas.Layers.Count; i++)
+		for (int i = Canvas.Layers.Count - 1; i >= 0; i--)
 		{
 			// Draw the transparent background
 			Raylib.DrawTexturePro(
@@ -53,6 +52,14 @@ class Layers
 				0f,
 				Color.White	
 			);
+
+			// If the current layer is selected
+			// then draw a little border thingy
+			// around it or something
+			if (Canvas.SelectedLayerIndex == i)
+			{
+				Raylib.DrawRectangleLinesEx(layerPreviews[i], 10f, Theme.Content);
+			}
 		}
 	}
 
@@ -67,7 +74,7 @@ class Layers
 		Rectangle layerPreview = new Rectangle(Raylib.GetScreenWidth() - layersWidth + padding, padding, layersWidth - padding2, layerPreviewHeight);
 
 		// Loop over all layers and get the rectangle
-		for (int i = Canvas.Layers.Count - 1; i >= 0 ; i--)
+		for (int i = 0; i < Canvas.Layers.Count; i++)
 		{
 			// Save the current layer
 			rectangles.Add(layerPreview);

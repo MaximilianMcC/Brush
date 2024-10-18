@@ -110,8 +110,8 @@ class Canvas
 
 		// Add it to the list of layers and also
 		// set it to be the selected layer rn
-		Layers.Add(currentLayer);
-		SelectedLayerIndex = Layers.Count - 1;
+		Layers.Insert(0, currentLayer);
+		SelectedLayerIndex = 0;
 	}
 
 	public static Image GetFlattenedImage()
