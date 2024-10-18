@@ -50,13 +50,27 @@ class Canvas
 	public static void Update()
 	{
 		// Check for if they wanna zoom in (ctrl + scroll)
-		const float zoomZoomeyZoomer = 0.01f;
-		if (Raylib.IsKeyDown(KeyboardKey.LeftControl))
+		const float zoomZoomeyZoomerZoomZoom = 0.01f;
+		if (Raylib.IsKeyDown(KeyboardKey.LeftAlt))
 		{
 			// Zoom in according to the delta mouse scroll
-			camera.Zoom += Raylib.GetMouseWheelMove() * zoomZoomeyZoomer;
-			Console.WriteLine(Zoom);
+			camera.Zoom += Raylib.GetMouseWheelMove() * zoomZoomeyZoomerZoomZoom;
 		}
+
+		// Check for if they want to move up/down
+		// and also left/right
+		const float moveMoveyMoverMoveMove = 15f;
+		if (Raylib.IsKeyDown(KeyboardKey.LeftControl))
+		{
+			// Move left/right
+			camera.Offset.X += Raylib.GetMouseWheelMove() * moveMoveyMoverMoveMove;
+		}
+		else
+		{
+			// Move up/down
+			camera.Offset.Y += Raylib.GetMouseWheelMove() * moveMoveyMoverMoveMove;
+		}
+
 	}
 
 	public static void Render()
