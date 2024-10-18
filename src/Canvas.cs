@@ -49,19 +49,13 @@ class Canvas
 
 	public static void Update()
 	{
-		// Check for if they wanna zoom in
-		const float zoomIncrease = 0.1f;
-		if (Raylib.IsKeyDown(KeyboardKey.LeftControl) && Raylib.IsKeyPressed(KeyboardKey.Equal)) camera.Zoom += zoomIncrease;
-		if (Raylib.IsKeyDown(KeyboardKey.LeftControl) && Raylib.IsKeyPressed(KeyboardKey.Minus)) camera.Zoom -= zoomIncrease;
-
-		// Check for if they wanna move left/right
-		// TODO: Might need to apply deltaTime
-		float panIncrease = 5f;
-		if (Raylib.IsKeyDown(KeyboardKey.LeftAlt))
+		// Check for if they wanna zoom in (ctrl + scroll)
+		const float zoomZoomeyZoomer = 0.01f;
+		if (Raylib.IsKeyDown(KeyboardKey.LeftControl))
 		{
-			// Apply the offset from scrolling
-			Vector2 mouseScroll = Raylib.GetMouseWheelMoveV();
-			camera.Offset += mouseScroll * panIncrease;
+			// Zoom in according to the delta mouse scroll
+			camera.Zoom += Raylib.GetMouseWheelMove() * zoomZoomeyZoomer;
+			Console.WriteLine(Zoom);
 		}
 	}
 
