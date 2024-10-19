@@ -149,9 +149,9 @@ class Canvas
 	{
 		// Loop over every layer and draw it
 		// TODO: Might need to use reverse for loop
-		foreach (RenderTexture2D layer in Layers)
+		for (int i = Layers.Count - 1; i >= 0 ; i--)
 		{
-			Raylib.DrawTexturePro(layer.Texture, new Rectangle(0, 0, Width, -Height), new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
+			Raylib.DrawTexturePro(Layers[i].Texture, new Rectangle(0, 0, Width, -Height), new Rectangle(0, 0, Raylib.GetScreenWidth(), Raylib.GetScreenHeight()), Vector2.Zero, 0f, Color.White);
 		}
 	}
 }
