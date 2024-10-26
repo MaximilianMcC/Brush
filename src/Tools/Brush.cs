@@ -16,7 +16,7 @@ class Brush : Tool
 	public override void Update()
 	{
 		// Check for if they want to change the brush size
-		const float brushIncrease = 3f;
+		const float brushIncrease = 10f;
 		if (Raylib.IsKeyPressed(KeyboardKey.LeftBracket) || Raylib.IsKeyPressedRepeat(KeyboardKey.LeftBracket)) Size -= brushIncrease;
 		if (Raylib.IsKeyPressed(KeyboardKey.RightBracket) || Raylib.IsKeyPressedRepeat(KeyboardKey.RightBracket)) Size += brushIncrease;
 

@@ -16,7 +16,7 @@ class Eraser : Tool
 	public override void Update()
 	{
 		// Check for if they want to change the Eraser size
-		const float EraserIncrease = 3f;
+		const float EraserIncrease = 10f;
 		if (Raylib.IsKeyPressed(KeyboardKey.LeftBracket) || Raylib.IsKeyPressedRepeat(KeyboardKey.LeftBracket)) Size -= EraserIncrease;
 		if (Raylib.IsKeyPressed(KeyboardKey.RightBracket) || Raylib.IsKeyPressedRepeat(KeyboardKey.RightBracket)) Size += EraserIncrease;
 

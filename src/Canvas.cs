@@ -50,7 +50,7 @@ class Canvas
 	public static void Update()
 	{
 		// Check for if they wanna zoom in (ctrl + scroll)
-		const float zoomZoomeyZoomerZoomZoom = 0.01f;
+		const float zoomZoomeyZoomerZoomZoom = 0.05f;
 		if (Raylib.IsKeyDown(KeyboardKey.LeftAlt))
 		{
 			// Zoom in according to the delta mouse scroll
@@ -59,7 +59,7 @@ class Canvas
 
 		// Check for if they want to move up/down
 		// and also left/right
-		const float moveMoveyMoverMoveMove = 15f;
+		const float moveMoveyMoverMoveMove = 20f;
 		if (Raylib.IsKeyDown(KeyboardKey.LeftControl))
 		{
 			// Move left/right
