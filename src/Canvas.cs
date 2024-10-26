@@ -15,6 +15,10 @@ class Canvas
 		get { return Layers[SelectedLayerIndex]; }
 	}
 
+	public static Vector2 MousePosition {
+		get { return Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), camera); }
+	}
+
 	private static Camera2D camera;
 	public static float Zoom {
 		get { return camera.Zoom; }
@@ -94,12 +98,6 @@ class Canvas
 
 		// Unload the temporary flattened image
 		Raylib.UnloadImage(tempFlattenedImage);
-	}
-
-	public static Vector2 MousePosition()
-	{
-		// TODO: Make this a property
-		return Raylib.GetScreenToWorld2D(Raylib.GetMousePosition(), camera);
 	}
 
 	public static void AddLayer(Color? color = null)

@@ -17,7 +17,7 @@ class Program
 
 		// Add/register all the tools
 		Toolbar.Tools.Add(new Cursor());
-		Toolbar.Tools.Add(new Brush());
+		Toolbar.Tools.Add(new PaintBrush());
 		Toolbar.Tools.Add(new EyeDropper());
 		Toolbar.Tools.Add(new Eraser());
 

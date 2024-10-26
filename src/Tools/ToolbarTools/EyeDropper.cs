@@ -18,7 +18,7 @@ class EyeDropper : Tool
 		if (Raylib.IsMouseButtonDown(MouseButton.Left) == false) return;
 
 		// Get the mouse position as separate ints
-		Vector2 mousePosition = Canvas.MousePosition();
+		Vector2 mousePosition = Canvas.MousePosition;
 		int x = (int)mousePosition.X;
 		int y = (int)mousePosition.Y;
 
