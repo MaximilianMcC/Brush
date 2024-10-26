@@ -19,6 +19,7 @@ class Program
 		Toolbar.Tools.Add(new Cursor());
 		Toolbar.Tools.Add(new Brush());
 		Toolbar.Tools.Add(new EyeDropper());
+		Toolbar.Tools.Add(new Eraser());
 
 		// Run the select thingy for the fist
 		// tool because theres nothing to call it
